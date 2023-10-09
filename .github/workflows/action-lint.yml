@@ -32,11 +32,26 @@ jobs:
 
       - name: Lint Code Base
         run: |
+          if [ "${{ github.event_name }}" == "push" ]; then
+            GITHUB_FROM_SHA="${{ github.event.before  }}"
+            GITHUB_TO_SHA="${{ github.event.after }}"
+          elif [ "${{ github.event_name }}" == "pull_request" ]; then
+            GITHUB_FROM_SHA="${{ github.event.pull_request.base.sha }}"
+            GITHUB_TO_SHA="${{ github.event.pull_request.head.sha }}"
+          else
+            GITHUB_FROM_SHA="4b825dc642cb6eb9a060e54bf8d69288fbee4904"
+            GITHUB_TO_SHA="HEAD"
+          fi
+
+          if [ "$GITHUB_FROM_SHA" == "0000000000000000000000000000000000000000" ]; then
+            GITHUB_FROM_SHA="4b825dc642cb6eb9a060e54bf8d69288fbee4904"
+          fi
+
+          echo "::notice::GITHUB_FROM_SHA: $GITHUB_FROM_SHA"
+          echo "::notice::GITHUB_TO_SHA: $GITHUB_TO_SHA"
+
           pre-commit run \
             --color always \
             --show-diff-on-failure \
             --from-ref $GITHUB_FROM_SHA \
             --to-ref $GITHUB_TO_SHA
-        env:
-          GITHUB_FROM_SHA: ${{ github.event_name == 'push' && github.event.before || github.event.pull_request.base.sha }}
-          GITHUB_TO_SHA: ${{ github.event_name == 'push' && github.event.after || github.event.pull_request.head.sha }}
