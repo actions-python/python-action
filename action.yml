@@ -1,0 +1,19 @@
+name: "Your action name here"
+description: "Your action description here"
+author: "Your author name here"
+
+# Inputs
+inputs:
+  milliseconds:
+    description: "Your action input description here"
+    required: true
+    default: "1000"
+
+# Outputs
+outputs:
+  time:
+    description: "Your action output description here"
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
