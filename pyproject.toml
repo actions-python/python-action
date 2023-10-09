@@ -38,3 +38,4 @@ exclude_also = [
 
 [tool.coverage.run]
 branch = true
+source_pkgs = ["src"]
