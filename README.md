@@ -1,5 +1,8 @@
 # Create a Python Action
 
+![CI](https://github.com/actions-python/python-action/actions/workflows/action-ci.yml/badge.svg)
+![Lint](https://github.com/actions-python/python-action/actions/workflows/action-lint.yml/badge.svg)
+
 Use this template to bootstrap the creation of a Python action. :rocket:
 
 This template includes compilation support, tests, a validation workflow, and
